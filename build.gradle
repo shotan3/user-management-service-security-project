@@ -21,12 +21,28 @@ repositories {
     mavenCentral()
 }
 
+ext{
+    set("postgresVersion", "42.7.2")
+}
+
 dependencies {
+    //Spring
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+
+    //Db
+    implementation "org.postgresql:postgresql:${postgresVersion}"
+    implementation 'org.flywaydb:flyway-core'
+
+
+    //Dev tools
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
+
+    //Test
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 

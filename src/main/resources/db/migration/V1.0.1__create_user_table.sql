@@ -1,6 +1,5 @@
 CREATE TABLE "user"."user"
 (
-    id                   BIGINT GENERATED ALWAYS AS IDENTITY,
     user_uuid            UUID         NOT NULL,
     first_name           VARCHAR(64)  NOT NULL,
     middle_name          VARCHAR(64),

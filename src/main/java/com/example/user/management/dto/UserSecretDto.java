@@ -5,11 +5,13 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
 import lombok.Builder;
+import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
 import java.time.ZonedDateTime;
 
 @Builder
+@Data
 public class UserSecretDto {
 
     long id;

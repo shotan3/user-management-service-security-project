@@ -9,7 +9,7 @@ CREATE TABLE "user"."user"
     primary_email        VARCHAR(128) NOT NULL UNIQUE,
     contact_phone        VARCHAR(64) UNIQUE,
     backup_email         VARCHAR(128) UNIQUE,
-    country_of_residence varchar(64),
+    country_of_residence VARCHAR(64),
     city_of_residence    VARCHAR(128),
     PRIMARY KEY (user_uuid)
 );

@@ -1,6 +1,5 @@
 CREATE TABLE "user".permission
 (
-    id              BIGINT GENERATED ALWAYS AS IDENTITY,
     permission_name VARCHAR(16) NOT NULL UNIQUE,
     PRIMARY KEY (permission_name)
 );

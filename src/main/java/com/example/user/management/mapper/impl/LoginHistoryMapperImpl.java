@@ -10,6 +10,7 @@ public class LoginHistoryMapperImpl implements LoginHistoryMapper {
 
     @Override
     public LoginHistoryDto mapToLoginHistoryDto(LoginHistory loginHistory) {
+        if (loginHistory == null) return null;
         return LoginHistoryDto.builder()
                 .id(loginHistory.getId())
                 .loginTime(loginHistory.getLoginTime())

@@ -10,6 +10,7 @@ public class AccountInfoMapperImpl implements AccountInfoMapper {
 
     @Override
     public AccountInfoDto mapToAccountInfoDto(AccountInfo accountInfo) {
+        if (accountInfo == null) return null;
         return AccountInfoDto.builder()
                 .id(accountInfo.getId())
                 .createdAt(accountInfo.getCreatedAt())

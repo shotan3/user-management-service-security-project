@@ -3,7 +3,9 @@ package com.example.user.management.mapper.impl;
 import com.example.user.management.dto.UserDto;
 import com.example.user.management.entity.User;
 import com.example.user.management.mapper.UserMapper;
+import org.springframework.stereotype.Service;
 
+@Service
 public class UserMapperImpl implements UserMapper {
     @Override
     public User mapToUserEntity(UserDto userDto) {

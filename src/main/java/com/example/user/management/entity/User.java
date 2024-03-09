@@ -28,6 +28,7 @@ public class User {
 
     @Id
     @UuidGenerator
+    @Column(name = "user_uuid")
     UUID userUUID;
 
     @Column

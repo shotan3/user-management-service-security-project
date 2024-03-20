@@ -2,11 +2,17 @@ package com.example.user.management.mapper.impl;
 
 import com.example.user.management.dto.UserDto;
 import com.example.user.management.entity.User;
+import com.example.user.management.mapper.RoleMapper;
 import com.example.user.management.mapper.UserMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class UserMapperImpl implements UserMapper {
+
+    private final RoleMapper roleMapper;
+
     @Override
     public User mapToUserEntity(UserDto userDto) {
         if (userDto == null) {
@@ -25,7 +31,7 @@ public class UserMapperImpl implements UserMapper {
                 .backupEmail(userDto.getBackupEmail())
                 .countryOfResidence(userDto.getCountryOfResidence())
                 .cityOfResidence(userDto.getCityOfResidence())
-                .role(userDto.getRole())
+                .role(roleMapper.mapToRole(userDto.getRole()))
                 .build();
 
     }
@@ -48,7 +54,7 @@ public class UserMapperImpl implements UserMapper {
                 .backupEmail(user.getBackupEmail())
                 .countryOfResidence(user.getCountryOfResidence())
                 .cityOfResidence(user.getCityOfResidence())
-                .role(user.getRole())
+                .role(roleMapper.mapToRoleDto(user.getRole()))
                 .build();
     }
 }

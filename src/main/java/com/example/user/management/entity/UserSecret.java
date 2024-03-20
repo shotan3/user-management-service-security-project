@@ -38,4 +38,5 @@ public class UserSecret {
     @OneToOne(optional = false)
     @JoinColumn(name = "user_uuid", referencedColumnName = "user_uuid")
     User userUUID;
+
 }

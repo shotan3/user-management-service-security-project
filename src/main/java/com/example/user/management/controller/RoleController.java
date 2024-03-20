@@ -14,7 +14,7 @@ import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/admin/role")
+@RequestMapping("/api/v1/admin/role")
 public class RoleController {
 
     private final RoleService service;

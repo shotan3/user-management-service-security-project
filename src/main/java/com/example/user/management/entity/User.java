@@ -1,13 +1,17 @@
 package com.example.user.management.entity;
 
 import com.example.user.management.dto.enums.Gender;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,6 +20,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.time.LocalDate;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -65,5 +70,14 @@ public class User {
     @ManyToOne
     @JoinColumn(name = "role_name")
     Role role;
+
+    @OneToOne(mappedBy = "userUUID", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    UserSecret secret;
+
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    AccountInfo accountInfo;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    Set<LoginHistory> loginHistory;
 
 }

@@ -1,7 +1,10 @@
 package com.example.user.management.entity;
 
+import com.example.user.management.dto.enums.RoleEnum;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -16,8 +19,9 @@ import java.util.Set;
 public class Role {
 
     @Id
-    @Column
-    String roleName;
+    @Column(name = "role_name")
+    @Enumerated(EnumType.STRING)
+    RoleEnum role;
 
 
     @ManyToMany(fetch = FetchType.EAGER)

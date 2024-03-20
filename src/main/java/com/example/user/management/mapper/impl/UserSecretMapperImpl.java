@@ -15,7 +15,6 @@ public class UserSecretMapperImpl implements UserSecretMapper {
                 .id(userSecret.getId())
                 .currPassword(userSecret.getCurrPassword())
                 .prevPassword(userSecret.getPrevPassword())
-                .passwordSalt(userSecret.getPasswordSalt())
                 .passwordLastUpdateTime(userSecret.getPasswordLastUpdateTime())
                 .userUUID(userSecret.getUserUUID().getUserUUID())
                 .build();

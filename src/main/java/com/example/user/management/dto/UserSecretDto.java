@@ -16,8 +16,6 @@ public class UserSecretDto {
 
     String prevPassword;
 
-    String passwordSalt;
-
     ZonedDateTime passwordLastUpdateTime;
 
     UUID userUUID;

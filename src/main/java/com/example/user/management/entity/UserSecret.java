@@ -33,9 +33,6 @@ public class UserSecret {
     String prevPassword;
 
     @Column
-    String passwordSalt;
-
-    @Column
     ZonedDateTime passwordLastUpdateTime;
 
     @OneToOne(optional = false)

@@ -2,6 +2,7 @@ package com.example.user.management.dto;
 
 import com.example.user.management.dto.enums.Gender;
 import com.example.user.management.entity.Role;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -53,6 +54,7 @@ public class UserDto {
     @Length(max = 128)
     private String cityOfResidence;
 
+    @JsonIgnore
     private Role role;
 
 }

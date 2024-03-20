@@ -11,3 +11,14 @@ spring:
     enabled: true
     locations: classpath:db/migration
     default-schema: flyway_history
+
+user:
+  config:
+    password:
+      min-length: 10
+      max-length: 64
+      require-uppercase: false
+      require-special: false
+      allowed-special-chars: "#?!@$%^&*-]"
+      bcrypt-strength: 10
+      bcrypt-version: $2A

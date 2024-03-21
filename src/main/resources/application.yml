@@ -22,3 +22,7 @@ user:
       allowed-special-chars: "#?!@$%^&*-]"
       bcrypt-strength: 10
       bcrypt-version: $2A
+    account:
+      retention-months:
+        marked-for-removal: 2
+        idle: 24

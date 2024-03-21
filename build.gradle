@@ -21,9 +21,10 @@ repositories {
     mavenCentral()
 }
 
-ext{
+ext {
     set("postgresVersion", "42.7.2")
     set("springdocVersion", "2.3.0")
+    set("libPhoneVersion", "8.13.32")
 }
 
 dependencies {
@@ -44,9 +45,11 @@ dependencies {
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:${springdocVersion}"
+    implementation "com.googlecode.libphonenumber:libphonenumber:${libPhoneVersion}"
 
     //Test
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
 }
 
 tasks.named('test') {

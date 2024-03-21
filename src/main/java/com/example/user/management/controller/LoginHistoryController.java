@@ -21,9 +21,9 @@ public class LoginHistoryController {
 
     private final LoginHistoryService service;
 
-    @GetMapping(value = "/users/{user_uuid}/login-history", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/users/{userUuid}/login-history", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<LoginHistoryDto> getLoginHistory(
-            @PathVariable(name = "user_uuid")
+            @PathVariable
             @Parameter(example = "a0d1c31a-83aa-43ae-b4a3-2c04146ba0df") UUID userUuid) {
         return service.getLoginHistory(userUuid)
                 .map(ResponseEntity::ok)

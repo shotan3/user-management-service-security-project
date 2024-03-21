@@ -21,9 +21,9 @@ public class AccountInfoController {
 
     private final AccountInfoService service;
 
-    @GetMapping(value = "/user/{user_uuid}/account-info", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/user/{userUuid}/account-info", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<AccountInfoDto> getAccountInfo(
-            @PathVariable(name = "user_uuid")
+            @PathVariable
             @Parameter(example = "a0d1c31a-83aa-43ae-b4a3-2c04146ba0df") UUID userUuid) {
         return service.getAccountInfoDto(userUuid)
                 .map(ResponseEntity::ok)

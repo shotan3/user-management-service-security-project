@@ -6,7 +6,7 @@ import com.example.user.management.entity.User;
 import com.example.user.management.entity.UserSecret;
 import com.example.user.management.mapper.UserMapper;
 import com.example.user.management.mapper.UserSecretMapper;
-import com.example.user.management.repository.UserRepository;
+import com.example.user.management.repository.UserRepositoryExtended;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -26,7 +26,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     private final UserSecretMapper userSecretMapper;
 
-    private final UserRepository userRepository;
+    private final UserRepositoryExtended userRepositoryExtended;
 
     @Override
     public UserDetails loadUserByUsername(String username) {
@@ -37,7 +37,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     }
 
     private UserSecret getUserSecretByUuid(UUID userUuid) {
-        Optional<UserSecret> userSecret = userRepository.findUserSecretByUserUuid(userUuid);
+        Optional<UserSecret> userSecret = userRepositoryExtended.findUserSecretByUserUuid(userUuid);
         return userSecret.orElseThrow(() -> {
             String msg = getUserNotFoundErrorMsg(userUuid.toString());
             log.error(msg);
@@ -46,7 +46,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     }
 
     private User getUserByUsername(String username) {
-        Optional<User> user = userRepository.findByEmailOrContactPhone(username);
+        Optional<User> user = userRepositoryExtended.findByEmailOrContactPhone(username);
         return user.orElseThrow(() -> {
             String msg = getUserNotFoundErrorMsg(username);
             log.error(msg);

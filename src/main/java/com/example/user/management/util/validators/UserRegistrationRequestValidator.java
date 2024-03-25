@@ -4,7 +4,7 @@ import com.example.user.management.dto.request.UserRegistrationRequest;
 import com.example.user.management.entity.User;
 import com.example.user.management.exception.custom.DuplicateResourceConflictException;
 import com.example.user.management.exception.custom.InvalidInputFormatException;
-import com.example.user.management.repository.UserRepository;
+import com.example.user.management.repository.UserRepositoryExtended;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import com.google.i18n.phonenumbers.Phonenumber;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +18,7 @@ public final class UserRegistrationRequestValidator {
     }
 
 
-    public static void validateUserUniqueness(UserRepository repository, UserRegistrationRequest userRegistrationRequest) {
+    public static void validateUserUniqueness(UserRepositoryExtended repository, UserRegistrationRequest userRegistrationRequest) {
         String email = userRegistrationRequest.getUser().getPrimaryEmail();
         Optional<User> userByEmail = repository.findByEmail(email);
         String errorMsg = "Resource already exists!";

@@ -2,10 +2,13 @@ package com.example.user.management.controller;
 
 import com.example.user.management.dto.AccountInfoDto;
 import com.example.user.management.dto.UserDto;
+import com.example.user.management.dto.enums.Gender;
+import com.example.user.management.dto.request.UserFilterRequest;
 import com.example.user.management.dto.request.UserRegistrationRequest;
 import com.example.user.management.exception.custom.ResourceNotFoundException;
 import com.example.user.management.service.UserService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -18,8 +21,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -55,6 +61,27 @@ public class UserController {
         return service.softDeleteUserByUuid(userUuid)
                 .map(ResponseEntity::ok)
                 .orElseThrow(ResourceNotFoundException::new);
+    }
+
+    @GetMapping(value = "/filter")
+    public List<UserDto> filterUsersBy(
+            @RequestParam(required = false) LocalDate fromDateOfBirth,
+            @RequestParam(required = false) LocalDate toDateOfBirth,
+            @RequestParam(required = false) Gender gender,
+            @RequestParam(required = false) String countryOfResidence,
+            @RequestParam(required = false) String cityOfResidence,
+            @RequestParam(required = false) @Positive Integer page,
+            @RequestParam(required = false) @Positive Integer pageSize) {
+        UserFilterRequest filter = UserFilterRequest.builder()
+                .fromDateOfBirth(fromDateOfBirth)
+                .toDateOfBirth(toDateOfBirth)
+                .gender(gender)
+                .countryOfResidence(countryOfResidence)
+                .cityOfResidence(cityOfResidence)
+                .page(page)
+                .pageSize(pageSize)
+                .build();
+        return service.filterUsersBy(filter);
     }
 
 }

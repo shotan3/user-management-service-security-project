@@ -4,6 +4,7 @@ import com.example.user.management.dto.AccountInfoDto;
 import com.example.user.management.dto.RoleDto;
 import com.example.user.management.dto.UserDto;
 import com.example.user.management.dto.enums.RoleEnum;
+import com.example.user.management.dto.request.UserFilterRequest;
 import com.example.user.management.dto.request.UserRegistrationRequest;
 import com.example.user.management.entity.AccountInfo;
 import com.example.user.management.entity.User;
@@ -14,7 +15,7 @@ import com.example.user.management.mapper.RoleMapper;
 import com.example.user.management.mapper.UserMapper;
 import com.example.user.management.repository.AccountInfoRepository;
 import com.example.user.management.repository.RoleRepository;
-import com.example.user.management.repository.UserRepository;
+import com.example.user.management.repository.UserRepositoryExtended;
 import com.example.user.management.repository.UserSecretRepository;
 import com.example.user.management.service.UserService;
 import com.example.user.management.util.validators.PasswordUtilService;
@@ -26,8 +27,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import static com.example.user.management.util.validators.UserRegistrationRequestValidator.validatePhoneNumber;
 import static com.example.user.management.util.validators.UserRegistrationRequestValidator.validateUserUniqueness;
@@ -37,7 +40,7 @@ import static com.example.user.management.util.validators.UserRegistrationReques
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
-    private final UserRepository userRepository;
+    private final UserRepositoryExtended userRepositoryExtended;
     private final RoleRepository roleRepository;
     private final UserSecretRepository userSecretRepository;
     private final AccountInfoRepository accountInfoRepository;
@@ -54,8 +57,15 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
+    public List<UserDto> filterUsersBy(UserFilterRequest filter) {
+        return userRepositoryExtended.filterUserBy(filter).stream()
+                .map(userMapper::mapToUserDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public Optional<UserDto> getUserById(UUID userUuid) {
-        return userRepository.findById(userUuid).map(userMapper::mapToUserDto);
+        return userRepositoryExtended.findById(userUuid).map(userMapper::mapToUserDto);
     }
 
     @Override
@@ -77,8 +87,8 @@ public class UserServiceImpl implements UserService {
     public Optional<UserDto> updateUserInfo(UUID userUuid, UserDto userRequest) {
         return Optional.of(
                 userMapper.mapToUserDto(
-                        userRepository.save(
-                                userRepository.findById(userUuid).orElseThrow(ResourceNotFoundException::new))));
+                        userRepositoryExtended.save(
+                                userRepositoryExtended.findById(userUuid).orElseThrow(ResourceNotFoundException::new))));
 
     }
 
@@ -97,7 +107,7 @@ public class UserServiceImpl implements UserService {
     private void validateUserRegistrationRequest(UserRegistrationRequest userRegistrationRequest) {
         passwordUtilService.validatePassword(userRegistrationRequest.getPassword());
         validatePhoneNumber(userRegistrationRequest.getUser().getContactPhone());
-        validateUserUniqueness(userRepository, userRegistrationRequest);
+        validateUserUniqueness(userRepositoryExtended, userRegistrationRequest);
     }
 
     private void encodeUserPassword(UserRegistrationRequest userRegistrationRequest) {
@@ -111,7 +121,7 @@ public class UserServiceImpl implements UserService {
         RoleDto role = getDefaultRole();
         userDto.setRole(role);
 
-        return userRepository.save(userMapper.mapToUserEntity(userDto));
+        return userRepositoryExtended.save(userMapper.mapToUserEntity(userDto));
     }
 
     private RoleDto getDefaultRole() {

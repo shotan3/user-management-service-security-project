@@ -26,3 +26,6 @@ user:
       retention-months:
         marked-for-removal: 2
         idle: 24
+    paging:
+      default-size: 20
+      max-size: 100

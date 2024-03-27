@@ -1,18 +1,22 @@
 package com.example.user.management.util.validators;
 
+import com.example.user.management.dto.request.PasswordChangeRequest;
+import com.example.user.management.entity.UserSecret;
 import com.example.user.management.exception.custom.InvalidInputFormatException;
+import com.example.user.management.exception.custom.PasswordUpdateNotAllowedException;
+import com.example.user.management.exception.custom.UnauthorizedRequestException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public final class PasswordUtilService {
-
-    private final PasswordEncoder encoder;
 
     @Value("${user.config.password.min-length}")
     private int minPassLength;
@@ -21,16 +25,18 @@ public final class PasswordUtilService {
     private int maxPassLength;
 
     @Value("${user.config.password.require-uppercase}")
-    private static boolean upperCaseCharRequired;
+    private boolean upperCaseCharRequired;
 
     @Value("${user.config.password.require-special}")
-    private static boolean specialCharRequired;
+    private boolean specialCharRequired;
 
     @Value("${user.config.password.allowed-special-chars}")
-    private static String specialChars;
+    private String specialChars;
 
+    private final PasswordEncoder encoder;
 
-    public void validatePassword(String password) {
+    public void validatePasswordFormat(String password) {
+        Objects.requireNonNull(password);
         boolean hasAppropriateLength = password.length() >= minPassLength && password.length() <= maxPassLength;
         String errorMsg = "Invalid password!";
         if (!hasAppropriateLength) {
@@ -62,6 +68,29 @@ public final class PasswordUtilService {
             throw new InvalidInputFormatException(errorMsg);
         }
 
+    }
+
+    public void validatePasswordUpdateRequest(UserSecret secret, PasswordChangeRequest request) {
+        Objects.requireNonNull(secret);
+        Objects.requireNonNull(request);
+
+        if (request.getCurrPassword().equals(request.getNewPassword())) {
+            String reason = "New password must differ from old one!";
+            log.error("Failed to update password! Reason: {}", reason);
+            throw new PasswordUpdateNotAllowedException(reason);
+        }
+
+        if (!encoder.matches(request.getCurrPassword(), secret.getCurrPassword())) {
+            String reason = String.format("Incorrect password for user=%s", secret.getUser().getUserUUID());
+            log.error("Failed to update password! Reason: {}", reason);
+            throw new UnauthorizedRequestException(reason);
+        }
+
+        if (encoder.matches(request.getNewPassword(), secret.getPrevPassword())) {
+            String reason = "New password must differ from one immediately preceding your current password";
+            log.error("Failed to update password! Reason: {}", reason);
+            throw new PasswordUpdateNotAllowedException(reason);
+        }
     }
 
     public String encodePassword(String password) {

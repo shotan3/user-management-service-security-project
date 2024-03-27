@@ -4,6 +4,7 @@ import com.example.user.management.dto.AccountInfoDto;
 import com.example.user.management.dto.RoleDto;
 import com.example.user.management.dto.UserDto;
 import com.example.user.management.dto.enums.RoleEnum;
+import com.example.user.management.dto.request.PasswordChangeRequest;
 import com.example.user.management.dto.request.UserFilterRequest;
 import com.example.user.management.dto.request.UserRegistrationRequest;
 import com.example.user.management.entity.AccountInfo;
@@ -64,6 +65,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void changePassword(UUID userUuid, PasswordChangeRequest request) {
+        passwordUtilService.validatePasswordFormat(request.getNewPassword());
+        UserSecret secret = userSecretRepository.findByUserUuid(userUuid).orElseThrow(ResourceNotFoundException::new);
+        passwordUtilService.validatePasswordUpdateRequest(secret, request);
+
+        String newPassword = passwordUtilService.encodePassword(request.getNewPassword());
+
+        secret.setPrevPassword(secret.getCurrPassword());
+        secret.setCurrPassword(newPassword);
+        secret.setPasswordLastUpdateTime(ZonedDateTime.now());
+        userSecretRepository.save(secret);
+    }
+
+    @Override
     public Optional<UserDto> getUserById(UUID userUuid) {
         return userRepositoryExtended.findById(userUuid).map(userMapper::mapToUserDto);
     }
@@ -105,7 +120,7 @@ public class UserServiceImpl implements UserService {
     }
 
     private void validateUserRegistrationRequest(UserRegistrationRequest userRegistrationRequest) {
-        passwordUtilService.validatePassword(userRegistrationRequest.getPassword());
+        passwordUtilService.validatePasswordFormat(userRegistrationRequest.getPassword());
         validatePhoneNumber(userRegistrationRequest.getUser().getContactPhone());
         validateUserUniqueness(userRepositoryExtended, userRegistrationRequest);
     }
@@ -133,7 +148,7 @@ public class UserServiceImpl implements UserService {
 
     private void storeUserPassword(User user, String password) {
         UserSecret userSecret = UserSecret.builder()
-                .userUUID(user)
+                .user(user)
                 .currPassword(password)
                 .prevPassword(password)
                 .passwordLastUpdateTime(ZonedDateTime.now().truncatedTo(ChronoUnit.MINUTES))

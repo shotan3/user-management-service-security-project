@@ -19,7 +19,7 @@ public interface UserRepositoryExtended extends JpaRepository<User, UUID>, UserR
     @Query("SELECT u FROM User u WHERE u.primaryEmail = :email")
     Optional<User> findByEmail(String email);
 
-    @Query("SELECT s FROM UserSecret s WHERE s.userUUID.userUUID = :userUuid")
+    @Query("SELECT s FROM UserSecret s WHERE s.user.userUUID = :userUuid")
     Optional<UserSecret> findUserSecretByUserUuid(UUID userUuid);
 
 }

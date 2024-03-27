@@ -12,6 +12,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.ZonedDateTime;
 
@@ -20,6 +21,7 @@ import java.time.ZonedDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@Setter
 public class UserSecret {
 
     @Id
@@ -37,6 +39,6 @@ public class UserSecret {
 
     @OneToOne(optional = false)
     @JoinColumn(name = "user_uuid", referencedColumnName = "user_uuid")
-    User userUUID;
+    User user;
 
 }

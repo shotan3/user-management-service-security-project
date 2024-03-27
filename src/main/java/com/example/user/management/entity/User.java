@@ -71,7 +71,7 @@ public class User {
     @JoinColumn(name = "role_name")
     Role role;
 
-    @OneToOne(mappedBy = "userUUID", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     UserSecret secret;
 
     @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)

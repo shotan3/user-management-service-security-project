@@ -2,7 +2,9 @@ package com.example.user.management.exception.handler;
 
 import com.example.user.management.exception.custom.DuplicateResourceConflictException;
 import com.example.user.management.exception.custom.InvalidInputFormatException;
+import com.example.user.management.exception.custom.PasswordUpdateNotAllowedException;
 import com.example.user.management.exception.custom.ResourceNotFoundException;
+import com.example.user.management.exception.custom.UnauthorizedRequestException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +15,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @RestControllerAdvice
 public class GlobalRestExceptionHandler extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler({DuplicateResourceConflictException.class})
+    @ExceptionHandler({DuplicateResourceConflictException.class, PasswordUpdateNotAllowedException.class})
     public ResponseEntity<Void> handleDuplicateResourceException() {
         return new ResponseEntity<>(new HttpHeaders(), HttpStatus.CONFLICT);
     }
@@ -26,6 +28,11 @@ public class GlobalRestExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler({ResourceNotFoundException.class})
     public ResponseEntity<Void> handleResourceNotFoundExceptions() {
         return new ResponseEntity<>(new HttpHeaders(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler({UnauthorizedRequestException.class})
+    public ResponseEntity<Void> handleAuthorizationExceptions() {
+        return new ResponseEntity<>(new HttpHeaders(), HttpStatus.UNAUTHORIZED);
     }
 
 }

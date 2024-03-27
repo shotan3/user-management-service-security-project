@@ -3,6 +3,7 @@ package com.example.user.management.controller;
 import com.example.user.management.dto.AccountInfoDto;
 import com.example.user.management.dto.UserDto;
 import com.example.user.management.dto.enums.Gender;
+import com.example.user.management.dto.request.PasswordChangeRequest;
 import com.example.user.management.dto.request.UserFilterRequest;
 import com.example.user.management.dto.request.UserRegistrationRequest;
 import com.example.user.management.exception.custom.ResourceNotFoundException;
@@ -82,6 +83,12 @@ public class UserController {
                 .pageSize(pageSize)
                 .build();
         return service.filterUsersBy(filter);
+    }
+
+    @PostMapping(value = "/{userUuid}/change-password", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void changeUserPassword(@PathVariable UUID userUuid,
+                                   @RequestBody PasswordChangeRequest request) {
+        service.changePassword(userUuid, request);
     }
 
 }

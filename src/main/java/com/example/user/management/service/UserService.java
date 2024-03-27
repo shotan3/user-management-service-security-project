@@ -2,6 +2,7 @@ package com.example.user.management.service;
 
 import com.example.user.management.dto.AccountInfoDto;
 import com.example.user.management.dto.UserDto;
+import com.example.user.management.dto.request.PasswordChangeRequest;
 import com.example.user.management.dto.request.UserFilterRequest;
 import com.example.user.management.dto.request.UserRegistrationRequest;
 
@@ -20,5 +21,7 @@ public interface UserService {
     Optional<AccountInfoDto> softDeleteUserByUuid(UUID userUuid);
 
     List<UserDto> filterUsersBy(UserFilterRequest filter);
+
+    void changePassword(UUID userUuid, PasswordChangeRequest request);
 
 }

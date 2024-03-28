@@ -3,7 +3,7 @@ package com.example.user.management.controller;
 import com.example.user.management.dto.RoleDto;
 import com.example.user.management.dto.enums.RoleEnum;
 import com.example.user.management.exception.custom.ResourceNotFoundException;
-import com.example.user.management.service.security.RoleService;
+import com.example.user.management.security.service.RoleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

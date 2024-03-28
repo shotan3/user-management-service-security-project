@@ -1,4 +1,4 @@
-package com.example.user.management.service.security;
+package com.example.user.management.security.service;
 
 import com.example.user.management.dto.UserDto;
 import com.example.user.management.dto.UserSecretDto;
@@ -7,6 +7,7 @@ import com.example.user.management.entity.UserSecret;
 import com.example.user.management.mapper.UserMapper;
 import com.example.user.management.mapper.UserSecretMapper;
 import com.example.user.management.repository.UserRepositoryExtended;
+import com.example.user.management.security.principal.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;

@@ -1,4 +1,4 @@
-package com.example.user.management.service.security;
+package com.example.user.management.security.service;
 
 import com.example.user.management.dto.RoleDto;
 import com.example.user.management.dto.enums.RoleEnum;

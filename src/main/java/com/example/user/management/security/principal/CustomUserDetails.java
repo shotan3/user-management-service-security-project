@@ -1,4 +1,4 @@
-package com.example.user.management.service.security;
+package com.example.user.management.security.principal;
 
 import com.example.user.management.dto.AuthorityDto;
 import com.example.user.management.dto.UserDto;

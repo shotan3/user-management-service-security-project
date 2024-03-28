@@ -8,6 +8,7 @@ import com.example.user.management.exception.custom.UnauthorizedRequestException
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
@@ -30,7 +31,7 @@ public class GlobalRestExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(new HttpHeaders(), HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler({UnauthorizedRequestException.class})
+    @ExceptionHandler({UnauthorizedRequestException.class, BadCredentialsException.class})
     public ResponseEntity<Void> handleAuthorizationExceptions() {
         return new ResponseEntity<>(new HttpHeaders(), HttpStatus.UNAUTHORIZED);
     }

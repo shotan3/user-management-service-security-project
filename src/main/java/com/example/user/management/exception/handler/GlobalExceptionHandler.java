@@ -5,6 +5,7 @@ import com.example.user.management.exception.custom.InvalidInputFormatException;
 import com.example.user.management.exception.custom.PasswordUpdateNotAllowedException;
 import com.example.user.management.exception.custom.ResourceNotFoundException;
 import com.example.user.management.exception.custom.UnauthorizedRequestException;
+import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 @RestControllerAdvice
-public class GlobalRestExceptionHandler extends ResponseEntityExceptionHandler {
+public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler({DuplicateResourceConflictException.class, PasswordUpdateNotAllowedException.class})
     public ResponseEntity<Void> handleDuplicateResourceException() {
@@ -31,7 +32,7 @@ public class GlobalRestExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(new HttpHeaders(), HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler({UnauthorizedRequestException.class, BadCredentialsException.class})
+    @ExceptionHandler({UnauthorizedRequestException.class, BadCredentialsException.class, ExpiredJwtException.class})
     public ResponseEntity<Void> handleAuthorizationExceptions() {
         return new ResponseEntity<>(new HttpHeaders(), HttpStatus.UNAUTHORIZED);
     }

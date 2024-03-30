@@ -29,3 +29,7 @@ user:
     paging:
       default-size: 20
       max-size: 100
+    jwt:
+      secret-key-base-64: V3htVjMwcmE4aTlVWVh4IU9CWENvZzhneDJtMk9wTEpwQA== #Should be in safe location in prod environment.
+      auth-token-lifespan-hours: 1
+      refresh-token-lifespan-hours: 24

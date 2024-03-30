@@ -1,10 +1,8 @@
 package com.example.user.management.entity;
 
-import com.example.user.management.dto.enums.LoginFailureReason;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -32,19 +30,12 @@ public class LoginHistory {
     ZonedDateTime loginTime;
 
     @Column
-    String sessionId;
-
-    @Column
-    boolean wasSuccessful;
+    int loginStatusCode;
 
     @Column
     String ipAddress;
 
-    @Column
-    @Enumerated(EnumType.STRING)
-    LoginFailureReason failureReason;
-
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_uuid", referencedColumnName = "user_uuid")
     User user;
 

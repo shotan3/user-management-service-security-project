@@ -14,11 +14,9 @@ public class LoginHistoryMapperImpl implements LoginHistoryMapper {
         return LoginHistoryDto.builder()
                 .id(loginHistory.getId())
                 .loginTime(loginHistory.getLoginTime())
-                .sessionId(loginHistory.getSessionId())
+                .loginStatusCode(loginHistory.getLoginStatusCode())
                 .userUuid(loginHistory.getUser().getUserUUID())
-                .wasSuccessful(loginHistory.isWasSuccessful())
                 .ipAddress(loginHistory.getIpAddress())
-                .failureReason(loginHistory.getFailureReason())
                 .build();
     }
 

@@ -1,6 +1,5 @@
 package com.example.user.management.dto;
 
-import com.example.user.management.dto.enums.LoginFailureReason;
 import lombok.Builder;
 import lombok.Data;
 
@@ -15,13 +14,9 @@ public class LoginHistoryDto {
 
     ZonedDateTime loginTime;
 
-    String sessionId;
-
-    boolean wasSuccessful;
+    int loginStatusCode;
 
     String ipAddress;
-
-    LoginFailureReason failureReason;
 
     UUID userUuid;
 

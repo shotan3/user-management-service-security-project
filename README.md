@@ -1,4 +1,4 @@
-# Redis educational project
+# Security educational project
 
 ## Main features related to Redis:
 - Caching using redis template

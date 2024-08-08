@@ -7,5 +7,5 @@
 
 ### Other features
 - User CRUD
-- User Authentication and Authorization (Basic auth)
+- User Authentication and Authorization (JWT auth)
 - Safe password storage (salted hash)
